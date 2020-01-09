@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "nasa-app-dev",
+    "host": "localhost",
+    "dialect": "postgres",
+    "operatorsAliases": 0
+  }
+}
