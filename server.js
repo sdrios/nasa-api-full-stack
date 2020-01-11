@@ -9,15 +9,14 @@ var salt = process.env.SALT_KEY;
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(session({
-  secret: "cats", 
+  secret: "randomtext", 
   resave: false, 
   saveUninitialized: true
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -33,20 +32,25 @@ passport.deserializeUser(function (id, cb) {
   });
 });
 
-app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/error' }),
-  function(req, res) {
-    res.redirect('/success');
-    console.log("redirecting")
-  });
+app.post('/login', function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/error'); }
+    req.logIn(user, function (err) {
+      if (err) { return next(err); }
+      console.log(req.user.username)
+      return res.redirect(`/success`);
+    });
+  })(req, res, next);
+});
 
-
-app.get('/success', function(req, res) {
-  if(req.isAuthenticated()) {
+app.get('/success', function (req, res, next) {
+  if (req.isAuthenticated()) {
+    //req.login();
     res.send("Welcome " + req.user.username + "!!");
+    next();
   } else {
-    console.log("user authentication failed at .get/success");
-    res.send("not authorized.");
+    res.send("username and pass not recognized.");
   }
 });
 
@@ -95,6 +99,7 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
     password, salt, 36000, 256, 'sha256'
