@@ -102,5 +102,17 @@
       border: 3px solid black;
       padding: 10px;
       color: black
-  
+    }
+
+    a:link, a:visited {
+      text-decoration: underline;
+    }
+    
+    a:hover, a:active {
+      text-decoration: overline;
+    }
+    
+    a {
+      color: #777;
+      float: right;
     }

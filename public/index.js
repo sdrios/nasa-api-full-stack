@@ -14,3 +14,11 @@ req.addEventListener("load", function(){
     document.getElementById("explanation").textContent = response.explanation;
   }
 })
+
+$('#datepicker').datepicker({
+  minDate: new Date(1995, 05, 16),
+  maxDate: '0',
+  onSelect: function() {
+    $('#date-form').submit();
+  }
+});

@@ -8,6 +8,32 @@ var pbkdf2 = require('pbkdf2');
 var salt = process.env.SALT_KEY;
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const axios = require("axios");
+const nunjucks = require("nunjucks");
+const bodyParser = require("body-parser");
+const beginning = require("./routes/beginning");
+const today = require("./routes/today");
+const date = require("./routes/date");
+const root = require("./routes/root");
+const url = process.env.URL;
+const port = process.env.PORT;
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+nunjucks.configure("views", {
+  autoescape: true,
+  express: app
+});
+
+root(app);
+beginning(app, axios, url);
+date(app, axios, url);
+today(app, axios, url);
+
+const listener = app.listen(port, () =>
+  console.log(`http://localhost:${listener.address().port}`)
+);
 
 app.use(session({
   secret: "randomtext", 
