@@ -15,10 +15,3 @@ req.addEventListener("load", function(){
   }
 })
 
-$('#datepicker').datepicker({
-  minDate: new Date(1995, 05, 16),
-  maxDate: '0',
-  onSelect: function() {
-    $('#date-form').submit();
-  }
-});
