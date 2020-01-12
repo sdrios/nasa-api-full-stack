@@ -14,4 +14,3 @@ req.addEventListener("load", function(){
     document.getElementById("explanation").textContent = response.explanation;
   }
 })
-
