@@ -26,6 +26,7 @@
     "express-session": "^1.17.0",
     "glitch": "^0.1.0",
     "jquery": "^3.4.1",
+    "moment": "^2.24.0",
     "node": "^13.6.0",
     "npm": "^6.13.6",
     "nunjucks": "^3.2.0",
