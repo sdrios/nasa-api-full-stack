@@ -15,11 +15,10 @@ const authRoutes = require('./routes/auth-routes');
 //set up view engine
 //app.set('view engine','ejs');
 
-//set up routes
-app.use('/auth', authRoutes);
+
 
 app.use(session({
-  secret: "randomtext", 
+  secret: process.env.SESSION_SECRET,
   resave: false, 
   saveUninitialized: true
 }));
@@ -29,15 +28,16 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
+app.use('/auth', authRoutes); //set up routes
 
 /*  PASSPORT SETUP  */
-passport.serializeUser(function (user, cb) {
-  cb(null, user.id);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function (id, cb) {
-  models.user.findOne({ where: { id: id } }).then(function (user) {
-    cb(null, user);
+passport.deserializeUser((id, done) => {
+  models.user.findByPk(id).then((user) => {
+    done(null, user);
   });
 });
 
@@ -112,13 +112,15 @@ passport.use(new GoogleStrategy({
   }).then((currentUser) => {
     if (currentUser) {
       //already have user in db
-      console.log("the user exists in db")
+      console.log("the user exists in db as: " + profile.displayName);
+      done(null, currentUser);
     } else {
       models.user.create({
         g_name: profile.displayName,
         g_id: profile.id
       }).then((newUser) => {
-        console.log(newUser);
+        console.log("New User created: " + newUser);
+        done(null, newUser);
       });
     }
   });
@@ -129,10 +131,8 @@ function encryptionPassword(password) {
     password, salt, 36000, 256, 'sha256'
   );
   var hash = key.toString('hex');
-
   return hash;
 }
-
 
 app.listen(process.env.PORT, function () {
   console.log('server listening on port ' + 
