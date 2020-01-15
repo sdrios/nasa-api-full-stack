@@ -9,7 +9,7 @@
   }
   
   .navbar {
-  background-image:url('images/space-wallpaper.gif');
+  background-image:url('images/space.gif');
   }
   
   .navbar-brand {
@@ -102,5 +102,4 @@
       border: 3px solid black;
       padding: 10px;
       color: black
-  
     }

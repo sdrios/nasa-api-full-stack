@@ -6,11 +6,19 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 var pbkdf2 = require('pbkdf2');
 var salt = process.env.SALT_KEY;
+const router = require('express').Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const authRoutes = require('./routes/auth-routes');
+
+//set up view engine
+//app.set('view engine','ejs');
+
+
 app.use(session({
-  secret: "randomtext", 
+  secret: process.env.SESSION_SECRET,
   resave: false, 
   saveUninitialized: true
 }));
@@ -20,38 +28,22 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
+app.use('/auth', authRoutes); //set up routes
 
 /*  PASSPORT SETUP  */
-passport.serializeUser(function (user, cb) {
-  cb(null, user.id);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function (id, cb) {
-  models.user.findOne({ where: { id: id } }).then(function (user) {
-    cb(null, user);
+passport.deserializeUser((id, done) => {
+  models.user.findByPk(id).then((user) => {
+    done(null, user);
   });
 });
 
-app.post('/login', function (req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/error'); }
-    req.logIn(user, function (err) {
-      if (err) { return next(err); }
-      console.log(req.user.username)
-      return res.redirect(`/success`);
-    });
-  })(req, res, next);
-});
-
-app.get('/success', function (req, res, next) {
-  if (req.isAuthenticated()) {
-    //req.login();
-    res.send("Welcome " + req.user.username + "!!");
-    next();
-  } else {
-    res.send("username and pass not recognized.");
-  }
+//homepage route
+app.get('/', (req, res)=>{
+  res.render('homepage'); 
 });
 
 app.post("/sign-up", function (req, response) {
@@ -64,14 +56,17 @@ app.post("/sign-up", function (req, response) {
     });
 });
 
+app.get('/forgot-password', (req,res)=>{
+  res.render('forgot-password')
+});
 
-app.get('/logout', function(req, res) {
-  if(req.isAuthenticated()){
-    console.log("user logging out");
-    req.logOut();
-    res.send("user has logged out");
+app.get('/success', function (req, res, next) {
+  if (req.isAuthenticated()) {
+    //req.login();
+    res.send("Welcome " + req.user.username + "!!");
+    next(); 
   } else {
-    res.send("You don't have a session open");
+    res.send("username and pass not recognized.");
   }
 });
 
@@ -100,15 +95,44 @@ passport.use(new LocalStrategy(
   }
 ));
 
+
+
+//PASSPORT-GOOGLE STRATEGY
+passport.use(new GoogleStrategy({
+  //options for google strategy
+  callbackURL: '/auth/google/redirect',
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET
+}, (accessToken, refreshToken, profile, done) => {
+  //check if user already exists in db
+  models.user.findOne({
+    where: {
+      g_id: profile.id
+    }
+  }).then((currentUser) => {
+    if (currentUser) {
+      //already have user in db
+      console.log("the user exists in db as: " + profile.displayName);
+      done(null, currentUser);
+    } else {
+      models.user.create({
+        g_name: profile.displayName,
+        g_id: profile.id
+      }).then((newUser) => {
+        console.log("New User created: " + newUser);
+        done(null, newUser);
+      });
+    }
+  });
+}));
+
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
     password, salt, 36000, 256, 'sha256'
   );
   var hash = key.toString('hex');
-
   return hash;
 }
-
 
 app.listen(process.env.PORT, function () {
   console.log('server listening on port ' + 

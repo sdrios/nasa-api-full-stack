@@ -14,6 +14,12 @@ module.exports = {
       password: {
         type: Sequelize.TEXT
       },
+      g_id:{
+        type:Sequelize.STRING
+      },
+      g_name:{
+        type:Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
