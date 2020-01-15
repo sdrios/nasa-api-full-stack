@@ -26,18 +26,15 @@
                         <div class="modal-body">
                             <button data-dismiss="modal" class="close">&times;</button>
                             <h4>Login</h4>
-                            <form action="/login" method="POST">
+                            <form action="/auth/login" method="POST">
                                 <input type="text" name="username" class="username form-control"
                                     placeholder="Username" />
                                 <input type="password" name="password" class="password form-control"
                                     placeholder="password" />
-
+                                <button>Sign In</button>
                              </form>
-                             <form action="/auth/google" method="GET" id="g-signin"><button>Google Sign In</button></form>
-
-                                <a href="/forgot-password">Forgot Password?</a><br />
-                                <input class="btn login" type="submit" value="Login" />
-                            </form>
+                             <form action="/auth/google" method="GET" id="g-signin"><button>Google Sign In </button></form>
+                            <form action="/forgot-password" method="GET" id="forgot-password"><button>Forgot Password?</button></form>
                         </div>
                     </div>
                 </div>
@@ -61,14 +58,11 @@
         <p class="description" id="explanation"></p>
     </div>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+</body>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>  
-
-</body>
-
+        crossorigin="anonymous"></script> 
 </html>

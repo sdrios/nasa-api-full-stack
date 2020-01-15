@@ -1,9 +1,25 @@
-$('#datepicker').val();
-$.ajax{
+$(document).ready(()=>{
+
+let nasaURL = 'https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date='
+
+let userDate = $('#datepicker').val();
+
+$.ajax({
+  url: nasaURL + userDate,
+    type: 'GET',
+  success: (data) => {
+    
+   
+$('#title').text(data.title);
+$('#date').text( data.date);
+$("#pic").attr('src',data.hdurl);
+$("#explanation").text(data.explanation);
+//$("#datepicker").attr('src',data.hdurl);
+  }
+});
 
 
-};
-
+});
 
 
 // var req = new XMLHttpRequest();
@@ -30,7 +46,3 @@ $.ajax{
 //     document.getElementById("datepicker").src =response.hdurl;
 //   }
 // })
-<<<<<<< HEAD
-=======
-
->>>>>>> 71aba723dcd8ce01e3b6c3977e22081371706a1f
