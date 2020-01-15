@@ -9,12 +9,12 @@ var salt = process.env.SALT_KEY;
 const router = require('express').Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authRoutes = require('./routes/auth-routes');
 
 //set up view engine
 //app.set('view engine','ejs');
-
 
 
 app.use(session({
