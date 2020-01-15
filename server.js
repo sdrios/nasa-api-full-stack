@@ -103,12 +103,26 @@ passport.use(new GoogleStrategy({
   callbackURL: '/auth/google/redirect',
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET
-}, (accessToken, refreshToken, profile,done) => {
-  //passport callback function
-
-
-})
-)
+}, (accessToken, refreshToken, profile, done) => {
+  //check if user already exists in db
+  models.user.findOne({
+    where: {
+      g_id: profile.id
+    }
+  }).then((currentUser) => {
+    if (currentUser) {
+      //already have user in db
+      console.log("the user exists in db")
+    } else {
+      models.user.create({
+        g_name: profile.displayName,
+        g_id: profile.id
+      }).then((newUser) => {
+        console.log(newUser);
+      });
+    }
+  });
+}));
 
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
