@@ -9,7 +9,7 @@ body {
 }
 
 .navbar {
-  background-image: url("images/space-wallpaper.gif");
+  background-image: url("images/space.gif");
 }
 
 .navbar-brand {
@@ -78,7 +78,6 @@ h4 {
   transition: all 0.5s;
   margin-top: 1em;
 }
-
 .sign-up {
   padding: 6px 20px;
   border-radius: 20px;
@@ -112,7 +111,7 @@ h4 {
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 50%;
+  width: 80%;
   border: 3px solid black;
   padding: 10px;
   color: black;
