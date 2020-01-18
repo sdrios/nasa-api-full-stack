@@ -54,8 +54,10 @@ app.get('/nasa-api', (req, res) => {
   })
 })
 
-app.post("/sign-up",(req, response)=> {
-  models.user.create({ 
+
+
+app.post("/sign-up", function (req, response) {
+  models.user.create({
     username: req.body.username, 
     password: encryptionPassword(req.body.password)
   })
@@ -91,6 +93,8 @@ app.post('/forgot-password', (req, res, done) => {
   });
 
 })
+
+
 
 app.get('/error', (req, res) => res.send("wow error logging in"));
 
