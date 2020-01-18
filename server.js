@@ -1,20 +1,18 @@
 require('dotenv').config();
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 const models = require('./models');
 const bodyParser = require("body-parser");
 const session = require("express-session");
 var pbkdf2 = require('pbkdf2');
-var salt = process.env.SALT_KEY;
-const router = require('express').Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authRoutes = require('./routes/auth-routes');
-
+const axios = require('axios').default;
 //set up view engine
-//app.set('view engine','ejs');
+app.set('view engine','ejs');
 
 
 app.use(session({
@@ -43,10 +41,20 @@ passport.deserializeUser((id, done) => {
 
 //homepage route
 app.get('/', (req, res)=>{
-  res.render('homepage'); 
+  res.render('homepage.ejs'); 
 });
 
-app.post("/sign-up", function (req, response) {
+app.get('/nasa-api', (req, res) => {
+
+  axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
+  .then((data)=>{
+    console.log(data.data);
+    console.log(typeof data);
+    res.send("hllo");
+  })
+})
+
+app.post("/sign-up",(req, response)=> {
   models.user.create({ 
     username: req.body.username, 
     password: encryptionPassword(req.body.password)
@@ -56,40 +64,53 @@ app.post("/sign-up", function (req, response) {
     });
 });
 
-app.get('/forgot-password', (req,res)=>{
-  res.render('forgot-password')
+app.get('/forgot-password', (req, res) => {
+  //res.send('Forgot Password? Enter your username')
+  res.render('forgot-password.ejs');
 });
 
-app.get('/success', function (req, res, next) {
-  if (req.isAuthenticated()) {
-    //req.login();
-    res.send("Welcome " + req.user.username + "!!");
-    next(); 
-  } else {
-    res.send("username and pass not recognized.");
-  }
-});
+app.post('/forgot-password', (req, res, done) => {
+  models.user.findOne({
+    where: {
+      username: req.body.username
+    }
+  }).then((user) => {
+    if (!user) {
+      res.send("user doesn't exist");
+      return done(null, false)
+    } else {
+      models.user.update({
+        password: encryptionPassword(req.body.password),
+      }, {
+        where: {
+          username: req.body.username
+        }
+      })
+    }
+    res.send("password updated!");
+  });
+
+})
 
 app.get('/error', (req, res) => res.send("wow error logging in"));
 
 
 /* PASSPORT LOCAL AUTHENTICATION */
 passport.use(new LocalStrategy(
-  function (username, password, done) {
+  (username, password, done) =>{
     models.user.findOne({
       where: {
         username: username
       }
-    }).then(function (user) {
+    }).then((user) =>{
       if (!user) {
         return done(null, false);
       }
-
       if (user.password != encryptionPassword(password)) {
         return done(null, false);
       }
       return done(null, user);
-    }).catch(function (err) {
+    }).catch((err)=> {
       return done(err);
     });
   }
@@ -128,11 +149,12 @@ passport.use(new GoogleStrategy({
 
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
-    password, salt, 36000, 256, 'sha256'
+    password, process.env.SALT_KEY, 36000, 256, 'sha256'
   );
   var hash = key.toString('hex');
   return hash;
 }
+
 
 app.listen(process.env.PORT, function () {
   console.log('server listening on port ' + 
