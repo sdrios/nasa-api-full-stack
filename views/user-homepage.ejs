@@ -21,35 +21,21 @@
 <body>
   <!-- Nav Bar -->
   <nav class="navbar navbar-expand-lg bg-dark ">
-    <h1 class="title">APOD API Project</h1>
+    <h1 class="title">Welcome,<%= username %> </h1>
     <div class="container">
-      <label for="id-of-input" class="custom-checkbox">
-        <input type="checkbox" id="id-of-input" />
-        <i class="glyphicon glyphicon-star-empty"></i>
-        <i class="glyphicon glyphicon-star"></i>
-        <span>Favorite</span>
-      </label>
-        <form action="/auth/login" method="POST">
-          <input type="text" name="username" class="username form-control" placeholder="Username" />
-          <input type="password" name="password" class="password form-control" placeholder="Password" />
-          <button>Sign In</button>
+      <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">Favorites</a>
+        <form action="/favorite" method="POST">
         </form>
     </div>
-    <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">log Out</a>
 
+    <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">log Out</a>
     <div id="log-out" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
             <button data-dismiss="modal" class="close">&times;</button>
-            <h4>Sign Up</h4>
-            <form action="/sign-up" method="POST">
-              <input type="text" name="username" class="username form-control" placeholder="Creat username" />
-              <input type="password" name="Create password" class="password form-control"
-                placeholder="Create password" />
-              <button>Sign Up</button>
+            <form action="/log-out" method="POST">
             </form>
-            <form action="/auth/google" method="GET" id="g-signin"><button>Sign up with Google </button></form>
           </div>
         </div>
       </div>
@@ -71,18 +57,9 @@
       <img class="center-block" id="pic" src="" alt="NASA Picture Of The Day">
     </div>
     <div class="select"></div>
-    <h5 class="center-block">Choose your date: <input id="datepicker" type="date"></input></h5>
+    <h3 class="center-block">Choose your date: <input id="datepicker" type="date"></input></h3>
     <div id="error"></div>
-    <div>
-      <span class="star glyphicon glyphicon-star-empty"></span>
-    </div>
-
-    <br />
-
-    <div>
-      <i class="heart fa fa-heart-o"></i>
-    </div>
-  </div>
+  
 
   <p class="description" id="explanation"></p>
   </div>

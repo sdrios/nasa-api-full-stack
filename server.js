@@ -42,7 +42,7 @@ passport.deserializeUser((id, done) => {
 });
 
 //homepage route
-app.get('/homepage', (req,res)=>{
+app.get('/', (req,res)=>{
   res.render('homepage.ejs'); 
 });
 
