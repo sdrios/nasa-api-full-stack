@@ -91,6 +91,17 @@ h4 {
   margin-top: 1em;
 }
 
+.log-out{
+  padding: 6px 20px;
+  border-radius: 20px;
+  background: none;
+  border: 2px solid #fab87f;
+  color: #fab87f;
+  font-weight: bold;
+  transition: all 0.5s;
+  margin-top: 1em;
+}
+
 .login:hover {
   background: #fab87f;
   color: #fff;
@@ -135,5 +146,28 @@ h4 {
   flex-wrap: initial;
   justify-content: space-around;
   color: #eee;
-  text-align:center;
+  text-align: center;
+}
+
+.hp-content {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.hp-container {
+  margin-top: 20px;
+  margin: auto;
+  border: 3px solid black;
+  padding: 20px 40px 40px;
+  max-width: 640px;
+  display: flex;
+}
+.hp-container__image {
+  object-fit: contain;
+  align-self: flex-start;
+  float: left;
+}
+.hp-container__text {
+  flex: 1 1 auto;
 }

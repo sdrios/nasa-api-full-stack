@@ -11,8 +11,9 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="index.css" />
-  <script src="index.js"></script>
+  <link rel="stylesheet" type="text/css" href="../public/index.css" />
+  <script src="../public/index.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
@@ -22,43 +23,37 @@
   <nav class="navbar navbar-expand-lg bg-dark ">
     <h1 class="title">APOD API Project</h1>
     <div class="container">
-      <a class="login-trigger" href="#" data-target="#login" data-toggle="modal">Login</a>
-      <div id="login" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <button data-dismiss="modal" class="close">&times;</button>
-              <h4>Login</h4>
-              <form action="/auth/login" method="POST">
-                <input type="text" name="username" class="username form-control" placeholder="Username" />
-                <input type="password" name="password" class="password form-control" placeholder="Password" />
-                <button>Sign In</button>
-              </form>
-              <form action="/auth/google" method="GET" id="g-signin"><button>Google Sign In </button></form>
-              <form action="/forgot-password" method="GET" id="forgot-password"><button>Forgot Password?</button></form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">Sign Up</a>
+      <label for="id-of-input" class="custom-checkbox">
+        <input type="checkbox" id="id-of-input" />
+        <i class="glyphicon glyphicon-star-empty"></i>
+        <i class="glyphicon glyphicon-star"></i>
+        <span>Favorite</span>
+      </label>
+        <form action="/auth/login" method="POST">
+          <input type="text" name="username" class="username form-control" placeholder="Username" />
+          <input type="password" name="password" class="password form-control" placeholder="Password" />
+          <button>Sign In</button>
+        </form>
+    </div>
+    <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">log Out</a>
 
-      <div id="sign-up" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <button data-dismiss="modal" class="close">&times;</button>
-              <h4>Sign Up</h4>
-              <form action="/sign-up" method="POST">
-                <input type="text" name="username" class="username form-control" placeholder="Creat username" />
-                <input type="password" name="Create password" class="password form-control"
-                  placeholder="Create password" />
-                <button>Sign Up</button>
-              </form>
-              <form action="/auth/google" method="GET" id="g-signin"><button>Sign up with Google </button></form>
-            </div>
+    <div id="log-out" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button data-dismiss="modal" class="close">&times;</button>
+            <h4>Sign Up</h4>
+            <form action="/sign-up" method="POST">
+              <input type="text" name="username" class="username form-control" placeholder="Creat username" />
+              <input type="password" name="Create password" class="password form-control"
+                placeholder="Create password" />
+              <button>Sign Up</button>
+            </form>
+            <form action="/auth/google" method="GET" id="g-signin"><button>Sign up with Google </button></form>
           </div>
         </div>
       </div>
+    </div>
     </div>
     </div>
   </nav>
@@ -67,22 +62,39 @@
   <!-- APOD API -->
 
   <div class="box">
-      <div class="content">
-          <h1>NASA Astronomy Picture Of The Day</h1>
-          <h2 id="title"></h2>
-          <h3>Date: <span id="date"></span></h3>
-      </div>
-      <div>
-          <img class="center-block" id="pic" src="" alt="NASA Picture Of The Day">
-      </div>
-      <h5 class="center-block">Choose your date: <input id="datepicker" type="date"></input></h5>
-      <div id="error"></div>
-  
-      <p class="description" id="explanation"></p>
+    <div class="content">
+      <h1>NASA Astronomy Picture Of The Day</h1>
+      <h2 id="title"></h2>
+      <h3>Date: <span id="date"></span></h3>
+    </div>
+    <div>
+      <img class="center-block" id="pic" src="" alt="NASA Picture Of The Day">
+    </div>
+    <div class="select"></div>
+    <h5 class="center-block">Choose your date: <input id="datepicker" type="date"></input></h5>
+    <div id="error"></div>
+    <div>
+      <span class="star glyphicon glyphicon-star-empty"></span>
+    </div>
+
+    <br />
+
+    <div>
+      <i class="heart fa fa-heart-o"></i>
+    </div>
+  </div>
+
+  <p class="description" id="explanation"></p>
   </div>
 
   <!-- APOD API -->
 
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 
 </html>
