@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Nasa API Full Stack</title>
+
+    <!-- Bootstrap core CSS -->
+    <title>nasa-api-full-stack</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="index.js"></script>
+
+</head>
+
+
+<body>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <h1 class="form-inline">APOD API PROJECT</h1>
+        <div class="container">
+            <a class="login-trigger" href="#" data-target="#login" data-toggle="modal">Login</a>
+            <div id="login" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <button data-dismiss="modal" class="close">&times;</button>
+                    <h4>Login</h4>
+                    <form action="/auth/login" method="POST">
+                      <input type="text" name="username" class="username form-control" placeholder="Username" />
+                      <input type="password" name="password" class="password form-control" placeholder="Password" />
+                      <button>Sign In</button>
+                    </form>
+                    <form action="/auth/google" method="GET" id="g-signin"><button>Google Sign In </button></form>
+                    <form action="/forgot-password" method="GET" id="forgot-password"><button>Forgot Password?</button></form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">Sign Up</a>
+      
+            <div id="sign-up" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <button data-dismiss="modal" class="close">&times;</button>
+                    <h4>Sign Up</h4>
+                    <form action="/sign-up" method="POST">
+                      <input type="text" name="username" class="username form-control" placeholder="Creat username" />
+                      <input type="password" name="Create password" class="password form-control"
+                        placeholder="Create password" />
+                      <button>Sign Up</button>
+                    </form>
+                    <form action="/auth/google" method="GET" id="g-signin"><button>Sign up with Google </button></form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </nav>
+    <!-- Nav Bar -->
+
+    <!-- Content -->
+    <div class="hp">
+        <div class="hp-container">
+        <div class="hp-content">
+          <img class="static-image" src="images/hp-picture.jpg">
+        </div>
+        </div>
+            <div class="hpr-container">
+              <div class="hpr-content">
+                <h1>APOD API</h1>
+                <p>"Each day a different image or photograph of our universe is featured, along with a brief explanation written by a professional astronomer."[1] The photograph does not necessarily correspond to a celestial event on the exact day that it is displayed, and images are sometimes repeated.[2] However, the pictures and descriptions often relate to current events in astronomy and space exploration."</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Content -->
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</html>

@@ -14,7 +14,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authRoutes = require('./routes/auth-routes');
 
 //set up view engine
-//app.set('view engine','ejs');
+app.set('view engine','ejs');
 
 
 app.use(session({
@@ -42,12 +42,12 @@ passport.deserializeUser((id, done) => {
 });
 
 //homepage route
-app.get('/', (req, res)=>{
-  res.render('homepage'); 
+app.get('/', (req,res)=>{
+  res.render('homepage.ejs'); 
 });
 
 app.post("/sign-up", function (req, response) {
-  models.user.create({ 
+  models.user.create({
     username: req.body.username, 
     password: encryptionPassword(req.body.password)
   })
@@ -59,6 +59,11 @@ app.post("/sign-up", function (req, response) {
 app.get('/forgot-password', (req,res)=>{
   res.render('forgot-password')
 });
+
+app.get('/user-homepage', (req,res)=>{
+  res.render('user-homepage.ejs')
+});
+
 
 app.get('/success', function (req, res, next) {
   if (req.isAuthenticated()) {
