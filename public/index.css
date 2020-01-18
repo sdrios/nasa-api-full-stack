@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  position: right;
 }
 
 body {
@@ -116,4 +117,23 @@ h4 {
   border: 3px solid black;
   padding: 10px;
   color: black;
+}
+
+.box {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.pic {
+  float: left;
+}
+
+.title {
+  display: flex;
+  flex-wrap: initial;
+  justify-content: space-around;
+  color: #eee;
+  text-align:center;
 }
