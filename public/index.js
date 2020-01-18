@@ -32,10 +32,12 @@ $(document).ready(() => {
     res.render("homepage");
   });
 
-  app.listen(3000, () => {
-    console.log("Server online on http://localhost:3000");
-  });
   app.get("/", (req, res) => {
     res.render("homepage", { username: user });
   });
+  
+  app.listen(3000, () => {
+    console.log("Server online on http://localhost:3000");
+  });
+
 });

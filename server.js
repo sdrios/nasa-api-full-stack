@@ -60,6 +60,11 @@ app.get('/forgot-password', (req,res)=>{
   res.render('forgot-password')
 });
 
+app.get('/user-homepage', (req,res)=>{
+  res.render('user-homepage.ejs')
+});
+
+
 app.get('/success', function (req, res, next) {
   if (req.isAuthenticated()) {
     //req.login();
