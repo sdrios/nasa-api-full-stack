@@ -14,6 +14,9 @@ const axios = require('axios').default;
 //set up view engine
 app.set('view engine','ejs');
 
+// using app.use to serve up static CSS files in public/assets/ folder when /public link is called in ejs files
+// app.use("/route", express.static("foldername"));
+app.use('/public', express.static('public'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

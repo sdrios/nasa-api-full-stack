@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}  
+
+.container {  
+    display: flex; 
+    flex-wrap: nowrap; 
+  }
+
+.uh-container {
+    display: inline-block;
+    flex-direction: row-reverse;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .discription {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+    border: 3px solid black;
+    padding: 10px;
+    color: black;
+    ;
+  }
+
+  .pic {
+    float: left;
+  }
+  
+  .title {
+    display: flex;
+    flex-wrap: initial;
+    justify-content: space-around;
+    color: #eee;
+    text-align: center;
+  }
+  
+  /* Favorites button */
+  label {
+    /* Presentation */
+    font-size: 48px
+  }
+  
+  /* Required Styling */
+  
+  label input[type="checkbox"] {
+    display: none;
+  }
+  
+  .custom-checkbox {
+    margin-left: 2em;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox .glyphicon {
+    color: gold;
+    position: absolute;
+    top: 0.4em;
+    left: -1.25em;
+    font-size: 0.75em;
+  }
+  
+  .custom-checkbox .glyphicon-star-empty {
+    color: gray;
+  }
+  
+  .custom-checkbox .glyphicon-star {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox:hover .glyphicon-star{
+    opacity: 0.5;
+  }
+  
+  .custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
+    opacity: 1;
+  }
+
+  /* end favorites button */
+  
