@@ -62,7 +62,7 @@ app.post("/sign-up", (req, res) => {
     password: encryptionPassword(req.body.password)
   })
     .then((user) =>{
-      res.render('login-page.js')
+    res.render('login-page.ejs')
     });
 });
 
@@ -96,7 +96,8 @@ app.post('/forgot-password', (req, res, done) => {
 app.get('/updated', (req, res) => res.render("updated-password.ejs"));
 app.get('/forgot', (req, res) => res.render("forgot-password.ejs"));
 app.get('/lout', (req, res) => res.render("logout.ejs"));
-app.get('/lin', (req, res) => res.render("login-page.ejs"));
+//app.get('/lin', (req, res) => res.render("login-page.ejs"));
+app.get('/sign', (req, res) => res.render("login-page.ejs"));
 
 app.get('/error', (req, res) => res.send("wow error logging in"));
 
