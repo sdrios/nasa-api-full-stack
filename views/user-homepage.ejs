@@ -20,15 +20,11 @@
 
 <body>
   <!-- Nav Bar -->
-  <nav>  
-    <ul class="uh-container">  
-      <li>Home</li>  
-      <li>Profile</li>  
-      <li class="search">  
-        <input type="text" class="search-input" placeholder="Search">  
-      </li>  
-      <li>Logout</li>  
-    </ul>  
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <div class="uh-container ml-auto" style="">
+      <form action="/favorites" method="GET" id="favorites"><button type="button" class="btn btn-danger btn-rounded" style="margin-right:10px" style="display:inline-block">Favorites</button></form>
+      <form action="/logout" method="get"><button type="button" class="btn btn-danger btn-rounded" style="margin-right:10px">Log Out</button></form>
+    </div>
   </nav>
     
   <!-- Nav Bar -->

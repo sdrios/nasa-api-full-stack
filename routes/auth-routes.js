@@ -18,7 +18,7 @@ router.post('/login',(req, res, next) => {
 router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
     //res.send("Welcome, " + req.user.username);
-    res.render('auth-homepage.ejs');
+    res.render('user-homepage.ejs');
 
     next(); 
   } else {
