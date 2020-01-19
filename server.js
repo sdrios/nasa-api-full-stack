@@ -56,18 +56,17 @@ app.get('/nasa-api', (req, res) => {
 
 
 
-app.post("/sign-up", function (req, response) {
+app.post("/sign-up", (req, res) => {
   models.user.create({
     username: req.body.username, 
     password: encryptionPassword(req.body.password)
   })
-    .then(function (user) {
-      response.send(user);
+    .then((user) =>{
+      res.render('login-page.js')
     });
 });
 
 app.get('/forgot-password', (req, res) => {
-  //res.send('Forgot Password? Enter your username')
   res.render('forgot-password.ejs');
 });
 
@@ -89,12 +88,15 @@ app.post('/forgot-password', (req, res, done) => {
         }
       })
     }
-    res.send("password updated!");
+    res.render('updated-password.ejs');
   });
 
 })
 
-
+app.get('/updated', (req, res) => res.render("updated-password.ejs"));
+app.get('/forgot', (req, res) => res.render("forgot-password.ejs"));
+app.get('/lout', (req, res) => res.render("logout.ejs"));
+app.get('/lin', (req, res) => res.render("login-page.ejs"));
 
 app.get('/error', (req, res) => res.send("wow error logging in"));
 
