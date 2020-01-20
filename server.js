@@ -50,6 +50,13 @@ app.get('/nasa-api', (req, res) => {
   .then((data)=>{
     console.log(data.data);
 
+//     if (media type = video){
+//       then render this html: 
+//       "<div class="embed-responsive embed-responsive-16by9">
+//            <iframe class="embed-responsive-item" src="<%= data.nasaData.url %>" allowfullscreen></iframe>
+//         </div>"
+//     } else render image
+
     res.render('user-homepage.ejs', {nasaData: {
       copyright: data.data.copyright,
       date: data.data.date,
@@ -105,11 +112,6 @@ app.post('/update-password', (req, res, done) => {
   });
 
 })
-
-// app.get('/updated', (req, res) => res.render("updated-password.ejs"));
-// app.get('/forgot', (req, res) => res.render("forgot-password.ejs"));
-// app.get('/lout', (req, res) => res.render("logout.ejs"));
-// app.get('/sign', (req, res) => res.render("login-page.ejs"));
 
 app.get('/error', (req, res) => res.render("error.ejs"));
 

@@ -18,10 +18,12 @@ router.post('/login',(req, res, next) => {
 router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
     //res.send("Welcome, " + req.user.username);
-    res.render('user-homepage.ejs');
+    res.render('user-homepage.ejs', {username:
+    {username: req.user.username}
+    });
     next(); 
   } else {
-    res.send("username and pass not recognized.");
+    res.render('error.ejs');
   }
 });
 
@@ -37,6 +39,16 @@ router.get('/logout',(req, res)=> {
     //render('homepage');
   }
 });
+
+router.get('/favorites',(req, res)=> {
+  if(req.isAuthenticated()){
+    res.render('favorites.ejs')
+  } else {
+    //res.send("You don't have a session open");
+    res.render('homepage.ejs');
+  }
+});
+
 
 //auth Google 
 router.get('/google', passport.authenticate('google',{
