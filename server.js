@@ -57,13 +57,15 @@ app.get('/nasa-api', (req, res) => {
 //         </div>"
 //     } else render image
 
-    res.render('user-homepage.ejs', {nasaData: {
-      copyright: data.data.copyright,
-      date: data.data.date,
-      expl: data.data.explanation,
-      url: data.data.url,
-      media: data.data.media_type
-    }})
+// {nasaData: {
+//       copyright: data.data.copyright,
+//       date: data.data.date,
+//       expl: data.data.explanation,
+//       url: data.data.url,
+//       media: data.data.media_type
+//     }}
+
+    res.render('user-homepage.ejs')
   })
 })
 
