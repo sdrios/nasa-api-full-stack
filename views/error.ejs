@@ -14,25 +14,29 @@
 
     <nav class="view navbar navbar-light bg-dark" style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
     <div class="row justify-content-end">
-        <div class="col-3">
-            <form action="/" method="GET" class="form-inline">
+      
+            <form action="/" method="GET" class="pl-2">
                 <button class="btn btn-dark" type="submit">Home</button>
             </form>
-        </div>
+             <form action="/sign-up" method="GET" class="pl-2">
+                <button class="btn btn-dark" type="submit">Sign Up</button>
+              </form>
+    
     </div>
 </nav>
     <div class="pt-5 container">
         <div class=" jumbotron">
-            <h1 class="display-4">Forgot your password?</h1>
+            <h1 class="display-4">There was an error logging in.</h1>
             <hr class="my-4">
-            <p>Enter your username and a new password below:</p>
+            <p>Please try again:</p>
     
-             <form action="/update-password" method="POST">
-                     <input type="text" name="username" class="username form-control" placeholder="Username" />
+            <form action="/auth/login" method="POST">
+                <input type="text" name="username" class="username form-control" placeholder="Username" />
                 <input type="password" name="password" class="password form-control" placeholder="Password" />
-                    <button>Reset Password</button>
-                </form>
+                <button>Sign In</button>
+              </form>
            
+
     
     
         </div>

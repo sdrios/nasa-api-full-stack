@@ -49,12 +49,25 @@ app.get('/nasa-api', (req, res) => {
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
   .then((data)=>{
     console.log(data.data);
-    console.log(typeof data);
-    res.send("hllo");
+
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type
+    }})
   })
 })
 
+app.get("/sign-in", (req, res)=>{
+res.render('login.ejs')
+});
 
+
+app.get("/sign-up", (req, res)=>{
+res.render('sign-up-page.ejs')
+});
 
 app.post("/sign-up", (req, res) => {
   models.user.create({
@@ -62,7 +75,7 @@ app.post("/sign-up", (req, res) => {
     password: encryptionPassword(req.body.password)
   })
     .then((user) =>{
-    res.render('login-page.ejs')
+    res.render('reg-login.ejs')
     });
 });
 
@@ -70,14 +83,14 @@ app.get('/forgot-password', (req, res) => {
   res.render('forgot-password.ejs');
 });
 
-app.post('/forgot-password', (req, res, done) => {
+app.post('/update-password', (req, res, done) => {
   models.user.findOne({
     where: {
       username: req.body.username
     }
   }).then((user) => {
     if (!user) {
-      res.send("user doesn't exist");
+      res.send("There was an error resetting your password.  Please go back to the main site.");
       return done(null, false)
     } else {
       models.user.update({
@@ -93,13 +106,12 @@ app.post('/forgot-password', (req, res, done) => {
 
 })
 
-app.get('/updated', (req, res) => res.render("updated-password.ejs"));
-app.get('/forgot', (req, res) => res.render("forgot-password.ejs"));
-app.get('/lout', (req, res) => res.render("logout.ejs"));
-//app.get('/lin', (req, res) => res.render("login-page.ejs"));
-app.get('/sign', (req, res) => res.render("login-page.ejs"));
+// app.get('/updated', (req, res) => res.render("updated-password.ejs"));
+// app.get('/forgot', (req, res) => res.render("forgot-password.ejs"));
+// app.get('/lout', (req, res) => res.render("logout.ejs"));
+// app.get('/sign', (req, res) => res.render("login-page.ejs"));
 
-app.get('/error', (req, res) => res.send("wow error logging in"));
+app.get('/error', (req, res) => res.render("error.ejs"));
 
 
 /* PASSPORT LOCAL AUTHENTICATION */

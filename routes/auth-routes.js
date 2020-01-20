@@ -19,7 +19,6 @@ router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
     //res.send("Welcome, " + req.user.username);
     res.render('user-homepage.ejs');
-
     next(); 
   } else {
     res.send("username and pass not recognized.");
@@ -46,8 +45,8 @@ router.get('/google', passport.authenticate('google',{
 
 //auth Google success
 router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
- // res.send('Welcome, ' + req.user.g_name);
-  res.render('user-homepage.ejs');
+  //res.send('Welcome, ' + req.user.g_name);
+  res.render('user-homepage.ejs', req.user);
 });
 
 
