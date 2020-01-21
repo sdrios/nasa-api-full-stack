@@ -18,14 +18,9 @@ router.post('/login',(req, res, next) => {
 router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
     //res.send("Welcome, " + req.user.username);
-<<<<<<< HEAD
-    res.render('user-homepage.ejs');
-
-=======
     res.render('user-homepage.ejs', {username:
     {username: req.user.username}
     });
->>>>>>> 11f9d44e2e3670d3b1806fd55a0c14a49c16b200
     next(); 
   } else {
     res.render('error.ejs');
