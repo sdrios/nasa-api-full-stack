@@ -18,11 +18,17 @@ router.post('/login',(req, res, next) => {
 router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
     //res.send("Welcome, " + req.user.username);
+<<<<<<< HEAD
     res.render('user-homepage.ejs');
 
+=======
+    res.render('user-homepage.ejs', {username:
+    {username: req.user.username}
+    });
+>>>>>>> 11f9d44e2e3670d3b1806fd55a0c14a49c16b200
     next(); 
   } else {
-    res.send("username and pass not recognized.");
+    res.render('error.ejs');
   }
 });
 
@@ -31,12 +37,23 @@ router.get('/logout',(req, res)=> {
   if(req.isAuthenticated()){
     console.log("user logging out");
     req.logOut();
-    res.send("user has logged out");
-    //render('homepage');
+    //res.send("user has logged out");
+    res.render('logout.ejs');
   } else {
     res.send("You don't have a session open");
+    //render('homepage');
   }
 });
+
+router.get('/favorites',(req, res)=> {
+  if(req.isAuthenticated()){
+    res.render('favorites.ejs')
+  } else {
+    //res.send("You don't have a session open");
+    res.render('homepage.ejs');
+  }
+});
+
 
 //auth Google 
 router.get('/google', passport.authenticate('google',{
@@ -45,8 +62,8 @@ router.get('/google', passport.authenticate('google',{
 
 //auth Google success
 router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
-  res.send('Welcome, ' + req.user.g_name);
-  //render('userhomepage.ejs');
+  //res.send('Welcome, ' + req.user.g_name);
+  res.render('user-homepage.ejs', req.user);
 });
 
 

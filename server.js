@@ -52,36 +52,57 @@ app.get('/nasa-api', (req, res) => {
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
   .then((data)=>{
     console.log(data.data);
-    console.log(typeof data);
-    res.send("hllo");
+
+//     if (media type = video){
+//       then render this html: 
+//       "<div class="embed-responsive embed-responsive-16by9">
+//            <iframe class="embed-responsive-item" src="<%= data.nasaData.url %>" allowfullscreen></iframe>
+//         </div>"
+//     } else render image
+
+// {nasaData: {
+//       copyright: data.data.copyright,
+//       date: data.data.date,
+//       expl: data.data.explanation,
+//       url: data.data.url,
+//       media: data.data.media_type
+//     }}
+
+    res.render('user-homepage.ejs')
   })
 })
 
+app.get("/sign-in", (req, res)=>{
+res.render('login.ejs')
+});
 
 
-app.post("/sign-up", function (req, response) {
+app.get("/sign-up", (req, res)=>{
+res.render('sign-up-page.ejs')
+});
+
+app.post("/sign-up", (req, res) => {
   models.user.create({
     username: req.body.username, 
     password: encryptionPassword(req.body.password)
   })
-    .then(function (user) {
-      response.send(user);
+    .then((user) =>{
+    res.render('reg-login.ejs')
     });
 });
 
 app.get('/forgot-password', (req, res) => {
-  //res.send('Forgot Password? Enter your username')
   res.render('forgot-password.ejs');
 });
 
-app.post('/forgot-password', (req, res, done) => {
+app.post('/update-password', (req, res, done) => {
   models.user.findOne({
     where: {
       username: req.body.username
     }
   }).then((user) => {
     if (!user) {
-      res.send("user doesn't exist");
+      res.send("There was an error resetting your password.  Please go back to the main site.");
       return done(null, false)
     } else {
       models.user.update({
@@ -92,14 +113,12 @@ app.post('/forgot-password', (req, res, done) => {
         }
       })
     }
-    res.send("password updated!");
+    res.render('updated-password.ejs');
   });
 
 })
 
-
-
-app.get('/error', (req, res) => res.send("wow error logging in"));
+app.get('/error', (req, res) => res.render("error.ejs"));
 
 
 /* PASSPORT LOCAL AUTHENTICATION */

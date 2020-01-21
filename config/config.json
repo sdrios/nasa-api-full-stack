@@ -6,5 +6,16 @@
     "host": "hansken.db.elephantsql.com",
     "dialect": "postgres",
     "operatorsAliases": 0
+  },
+  "production": {
+    "username": "yfpmpdgh",
+    "password": "CGPV3zZeuxHexKcAGPc6yY10O3BKIdej",
+    "database": "yfpmpdgh",
+    "host": "http://hansken.db.elephantsql.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+        "ssl": "true"
+      },
+    "operatorsAliases": 0
   }
 }
