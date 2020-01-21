@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-
     <title>Nasa API Full Stack</title>
-
     <!-- Bootstrap core CSS -->
     <title>nasa-api-full-stack</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -20,9 +18,10 @@
 
 <body>
     <!-- Nav Bar -->
-    <nav class="navbar navbar-right navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-right navbar-expand-lg bg-dark justify-content-between flex-nowrap flex-row"">
         <h1 class="form-inline">APOD API PROJECT</h1>
         <div class="container">
+          <ul class="nav navbar-nav flex-row float-right">
             <a class="login-trigger" href="#" data-target="#login" data-toggle="modal">Login</a>
             <div id="login" class="modal fade" role="dialog">
               <div class="modal-dialog">
@@ -41,6 +40,7 @@
                 </div>
               </div>
             </div>
+          </ul>
             <a class="login-trigger" href="#" data-target="#sign-up" data-toggle="modal">Sign Up</a>
       
             <div id="sign-up" class="modal fade" role="dialog">
