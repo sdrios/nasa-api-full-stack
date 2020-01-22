@@ -5,12 +5,14 @@ const app = express();
 const models = require('./models');
 const bodyParser = require("body-parser");
 const session = require("express-session");
-var pbkdf2 = require('pbkdf2');
+const pbkdf2 = require('pbkdf2');
+const moment = require('moment');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authRoutes = require('./routes/auth-routes');
 const axios = require('axios').default;
+
 //set up view engine
 app.set('view engine','ejs');
 
@@ -28,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.use('/auth', authRoutes); //set up routes
 
-/*  PASSPORT SETUP  */
+//serialize users
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -44,38 +46,48 @@ app.get('/', (req, res)=>{
   res.render('homepage.ejs'); 
 });
 
+//nasa
 app.get('/nasa-api', (req, res) => {
-
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
   .then((data)=>{
     console.log(data.data);
 
-//     if (media type = video){
-//       then render this html: 
-//       "<div class="embed-responsive embed-responsive-16by9">
-//            <iframe class="embed-responsive-item" src="<%= data.nasaData.url %>" allowfullscreen></iframe>
-//         </div>"
-//     } else render image
-
-// {nasaData: {
-//       copyright: data.data.copyright,
-//       date: data.data.date,
-//       expl: data.data.explanation,
-//       url: data.data.url,
-//       media: data.data.media_type
-//     }}
-
-    res.render('user-homepage.ejs')
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type
+    }})
   })
-})
+});
+
+app.post('/nasa-api-2', (req, res) => {
+  console.log(req.body.userDateInput);
+  let userDate = req.body.userDateInput;
+
+  axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=' + userDate)
+  .then((data)=>{
+    console.log(data.data);
+
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type
+    }})
+  })
+});
+
 
 app.get("/sign-in", (req, res)=>{
-res.render('login.ejs')
+res.render('login.ejs');
 });
 
 
 app.get("/sign-up", (req, res)=>{
-res.render('sign-up-page.ejs')
+res.render('sign-up-page.ejs');
 });
 
 app.post("/sign-up", (req, res) => {
@@ -84,7 +96,7 @@ app.post("/sign-up", (req, res) => {
     password: encryptionPassword(req.body.password)
   })
     .then((user) =>{
-    res.render('reg-login.ejs')
+    res.render('reg-login.ejs');
     });
 });
 
