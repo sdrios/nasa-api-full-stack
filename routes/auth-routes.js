@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const axios = require('axios').default;
 
 //auth login
 router.post('/login',(req, res, next) => {
@@ -17,12 +18,22 @@ router.post('/login',(req, res, next) => {
 //auth login success
 router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
-    //res.send("Welcome, " + req.user.username);
-    res.render('user-homepage.ejs', {username:
-    {username: req.user.username}
-    });
-    next(); 
-  } else {
+        axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
+        .then((data)=>{
+          // res.render('user-homepage.ejs', {username:
+          // {username: req.user.username}
+          res.render('user-homepage.ejs', {nasaData: {
+                copyright: data.data.copyright,
+                date: data.data.date,
+                expl: data.data.explanation,
+                url: data.data.url,
+                media: data.data.media_type,
+                todayDate: todayDate
+          }})
+        });
+    //next(); 
+  } 
+  else {
     res.render('error.ejs');
   }
 });
@@ -58,9 +69,16 @@ router.get('/google', passport.authenticate('google',{
 //auth Google success
 router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
   //res.send('Welcome, ' + req.user.g_name);
-  res.render('user-homepage.ejs', req.user);
+  axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
+  .then((data)=>{
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type,
+    }})
+  })
 });
-
-
 
 module.exports = router;
