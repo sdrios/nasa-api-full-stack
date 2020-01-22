@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
 </head>
 
-<body style="background-color:#343a40;">
+<body style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 
-  <nav class="view navbar navbar-light bg-dark" style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-    <div class="row justify-content-end">
+  <nav class="view navbar navbar-secondary">
+    <div class="row justify-content-end" style="margin-right: 20px;">
       <form action="/auth/favorites" method="GET" class="pl-2">
-        <button class="btn btn-dark" type="submit">Favorites</button>
+        <button class="btn btn-dark btn-lg" type="submit" style="margin-right: 20px; margin-left: 30px;">Favorites</button>
       </form>
       <form action="/auth/logout" method="GET" class="pl-2">
-        <button class="btn btn-dark" type="submit">Logout</button>
+        <button class="btn btn-dark btn-lg" type="submit" style="margin-right: 20px;">Logout</button>
       </form>
     </div>
   </nav>
@@ -29,8 +29,11 @@
           </div>
           <div class="row">
             <div class="col-3">
-              <p>LEFT CONTENT!</p>
-            </div>
+              <form action="/nasa-api" method="GET">
+              <h5>Choose your date: <input id="datepicker" type="date"></input></h5>
+              <div id="error"></div>
+              </form>
+              </div>
             <div class="col-3">
               <img src="https://www.pinclipart.com/pindetail/hmwohm_save-the-heart-by-ofirma85-instagram-like-icon/" width="100" height="100"></img>
             </div>
