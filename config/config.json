@@ -14,8 +14,8 @@
     "host": "http://hansken.db.elephantsql.com",
     "dialect": "postgres",
     "dialectOptions": {
-        "ssl": "true"
-      },
+      "ssl": "true"
+    },
     "operatorsAliases": 0
   }
 }
