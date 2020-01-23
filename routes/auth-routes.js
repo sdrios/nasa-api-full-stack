@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const axios = require('axios').default;
+const models = require('../models');
 
 //auth login
 router.post('/login',(req, res, next) => {
@@ -28,13 +29,37 @@ router.get('/success', (req, res, next) => {
                 expl: data.data.explanation,
                 url: data.data.url,
                 media: data.data.media_type,
-                todayDate: todayDate
           }})
         });
     //next(); 
   } 
   else {
     res.render('error.ejs');
+  }
+});
+
+router.post('/add-favorite', (req, res, next) => {
+
+  if (req.isAuthenticated()) {
+    console.log(req.body)
+    console.log(req.user.id)
+    console.log(typeof req.user.id)
+    console.log(req.body.date)
+    console.log(typeof req.body.date)
+
+     models.favorites.create({
+        imageDate: req.body.date, 
+        userID: req.user.id
+  }).then((newFavorite)=>{
+    console.log(newFavorite)
+  });
+
+    res.render('favorites.ejs')
+    next(); 
+  } 
+  else {
+    res.send("ERROR");
+    //res.render('error.ejs');
   }
 });
 
@@ -76,7 +101,6 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
       date: data.data.date,
       expl: data.data.explanation,
       url: data.data.url,
-      media: data.data.media_type,
     }})
   })
 });

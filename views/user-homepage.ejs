@@ -30,17 +30,16 @@
             </div>
             <div class="row">
                 <form action="/nasa-api-2" method="POST">
-                    <input type="date" name="userDateInput" id="datepicker">
+                    <input type="date" name="userDateInput" id="datepicker"></input>
                     <button type="submit">Select</button>
                   </form>
-                  <form action="/add-favorite" method="POST">
-                    <input type = 
+                  <form action="/auth/add-favorite" method="POST">
+                    <input type="text" name="date" value="<%=nasaData.date%>"></input>
                     <button type="submit">Favorite</button>
                   </form>
               </div>
           </div>
        </div>
-
+       
 </body>
-
 </html>
