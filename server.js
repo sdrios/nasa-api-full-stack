@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
-const models = require('./models');
+const models = require("./models");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const pbkdf2 = require('pbkdf2');
@@ -13,7 +13,7 @@ const authRoutes = require('./routes/auth-routes');
 const axios = require('axios').default;
 
 //set up view engine
-app.set('view engine','ejs');
+app.set("view engine", "ejs");
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -25,8 +25,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname + '/public'));
-app.use('/auth', authRoutes); //set up routes
+app.use(express.static(__dirname + "/public"));
+app.use("/auth", authRoutes); //set up routes
 
 //serialize users
 passport.serializeUser((user, done) => {
@@ -34,14 +34,14 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  models.user.findByPk(id).then((user) => {
+  models.user.findByPk(id).then(user => {
     done(null, user);
   });
 });
 
 //homepage route
-app.get('/', (req, res)=>{
-  res.render('homepage.ejs'); 
+app.get("/", (req, res) => {
+  res.render("homepage.ejs");
 });
 
 //nasa get request renders on user homepage 
@@ -54,8 +54,7 @@ app.get('/nasa-api', (req, res) => {
       copyright: data.data.copyright,
       date: data.data.date,
       expl: data.data.explanation,
-      url: data.data.url,
-      media: data.data.media_type
+      url: data.data.url
     }})
   })
 });
@@ -69,8 +68,7 @@ app.post('/nasa-api-2', (req, res) => {
       copyright: data.data.copyright,
       date: data.data.date,
       expl: data.data.explanation,
-      url: data.data.url,
-      media: data.data.media_type
+      url: data.data.url
     }})
   })
 });
@@ -84,65 +82,48 @@ res.render('sign-up-page.ejs');
 });
 
 app.post("/sign-up", (req, res) => {
-  models.user.create({
-    username: req.body.username, 
-    password: encryptionPassword(req.body.password)
-  })
-    .then((user) =>{
-    res.render('reg-login.ejs');
+  models.user
+    .create({
+      username: req.body.username,
+      password: encryptionPassword(req.body.password)
+    })
+    .then(user => {
+      res.render("reg-login.ejs");
     });
 });
 
-app.get('/forgot-password', (req, res) => {
-  res.render('forgot-password.ejs');
+app.get("/forgot-password", (req, res) => {
+  res.render("forgot-password.ejs");
 });
 
-app.post('/update-password', (req, res, done) => {
-  models.user.findOne({
-    where: {
-      username: req.body.username
-    }
-  }).then((user) => {
-    if (!user) {
-      res.send("There was an error resetting your password.  Please go back to the main site.");
-      return done(null, false)
-    } else {
-      models.user.update({
-        password: encryptionPassword(req.body.password),
-      }, {
-        where: {
-          username: req.body.username
-        }
-      })
-    }
-    res.render('updated-password.ejs');
-  });
-
-})
-
-app.get('/error', (req, res) => res.render("error.ejs"));
-
-
-/* PASSPORT LOCAL AUTHENTICATION */
-passport.use(new LocalStrategy(
-  (username, password, done) =>{
-    models.user.findOne({
+app.post("/update-password", (req, res, done) => {
+  models.user
+    .findOne({
       where: {
-        username: username
+        username: req.body.username
       }
-    }).then((user) =>{
+    })
+    .then(user => {
       if (!user) {
+        res.send(
+          "There was an error resetting your password.  Please go back to the main site."
+        );
         return done(null, false);
+      } else {
+        models.user.update(
+          {
+            password: encryptionPassword(req.body.password)
+          },
+          {
+            where: {
+              username: req.body.username
+            }
+          }
+        );
       }
-      if (user.password != encryptionPassword(password)) {
-        return done(null, false);
-      }
-      return done(null, user);
-    }).catch((err)=> {
-      return done(err);
+      res.render("updated-password.ejs");
     });
-  }
-));
+});
 
 //PASSPORT-GOOGLE STRATEGY
 passport.use(new GoogleStrategy({
@@ -171,20 +152,26 @@ passport.use(new GoogleStrategy({
         done(null, newUser);
       });
     }
-  });
+  })
 }));
 
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
-    password, process.env.SALT_KEY, 36000, 256, 'sha256'
+    password,
+    process.env.SALT_KEY,
+    36000,
+    256,
+    "sha256"
   );
-  var hash = key.toString('hex');
+  var hash = key.toString("hex");
   return hash;
 }
 
-
-app.listen(process.env.PORT, function () {
-  console.log('server listening on port ' + 
-  process.env.PORT + ' app name = ' + 
-  process.env.PROJECT_NAME);
-})
+app.listen(process.env.PORT, function() {
+  console.log(
+    "server listening on port " +
+      process.env.PORT +
+      " app name = " +
+      process.env.PROJECT_NAME
+  );
+});
