@@ -54,8 +54,7 @@ app.get('/nasa-api', (req, res) => {
       copyright: data.data.copyright,
       date: data.data.date,
       expl: data.data.explanation,
-      url: data.data.url,
-      media: data.data.media_type
+      url: data.data.url
     }})
   })
 });
@@ -69,8 +68,7 @@ app.post('/nasa-api-2', (req, res) => {
       copyright: data.data.copyright,
       date: data.data.date,
       expl: data.data.explanation,
-      url: data.data.url,
-      media: data.data.media_type
+      url: data.data.url
     }})
   })
 });
@@ -154,8 +152,8 @@ passport.use(new GoogleStrategy({
         done(null, newUser);
       });
     }
-  )
-);
+  })
+}));
 
 function encryptionPassword(password) {
   var key = pbkdf2.pbkdf2Sync(

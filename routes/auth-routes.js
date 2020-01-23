@@ -34,12 +34,10 @@ router.get("/success", (req, res, next) => {
                 copyright: data.data.copyright,
                 date: data.data.date,
                 expl: data.data.explanation,
-                url: data.data.url,
-                media: data.data.media_type,
+                url: data.data.url
           }})
         });
-      });
-    //next();
+    next();
   } else {
     res.render("error.ejs");
   }
@@ -111,7 +109,7 @@ router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
       expl: data.data.explanation,
       url: data.data.url,
     }})
-  };
+  })
 });
 
 module.exports = router;
