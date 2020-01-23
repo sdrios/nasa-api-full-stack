@@ -2,44 +2,58 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>User Homepage</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <title>User Homepage</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </head>
 
-<body style="background-color:#343a40;">
+<body
+  style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 
-  <nav class="view navbar navbar-light bg-dark" style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-    <div class="row justify-content-end">
+  <nav class="view navbar navbar-secondary">
+    <a class="navbar-brand" style="color: white;">
+      <p style="margin-left: 50px; font-size: 35pt; font-weight: bold;">Welcome</p>
+    </a>
+
+    <div class="row justify-content-end" style="margin-right: 20px;">
       <form action="/auth/favorites" method="GET" class="pl-2">
-        <button class="btn btn-dark" type="submit">Favorites</button>
+        <button class="btn btn-dark btn-lg" type="submit"
+          style="margin-right: 20px; margin-left: 30px;">Favorites</button>
       </form>
       <form action="/auth/logout" method="GET" class="pl-2">
-        <button class="btn btn-dark" type="submit">Logout</button>
+        <button class="btn btn-dark btn-lg" type="submit" style="margin-right: 20px;">Logout</button>
       </form>
     </div>
   </nav>
 
-    <div class="pt-5 container">
-        <div class=" jumbotron">
-          <div class="row"> 
-              <img class="rounded border" src="<%=nasaData.url%>">
-            </div>
-            <div class="row">
-                <form action="/nasa-api-2" method="POST">
-                    <input type="date" name="userDateInput" id="datepicker"></input>
-                    <button type="submit">Select</button>
-                  </form>
-                  <form action="/auth/add-favorite" method="POST">
-                    <input type="text" name="date" value="<%=nasaData.date%>"></input>
-                    <button type="submit">Favorite</button>
-                  </form>
-              </div>
-          </div>
-       </div>
-       
+  <div class="pt-5 container">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="row" style="margin-left: auto; margin-right: auto;">
+        <img class="rounded border" style="display: inline-block; margin-left: auto; margin-right: auto;"
+          src="<%=nasaData.url%>">
+      </div>
+      <div class="row" style="display: block; text-align: center;">
+        <form action="/nasa-api-2" method="POST"
+          style="display: inline-block; margin-left: auto; margin-right: auto; margin-top: 15px;">
+          <input type="date" name="userDateInput" id="datepicker">
+          <button type="submit">Select</button>
+        </form>
+        <form action="/add-favorite" method="POST"
+          style="display: inline-block; margin-left: auto; margin-right: auto; margin-top: 15px;">
+          <button type="submit">Favorite</button>
+        </form>
+        <div style="display: inline-block; margin-left: 10px; margin-right: auto; margin-top: 15px;">
+          <%=nasaData.date%>
+        </div>
+        <div style="margin-top: 10px; text-align: center; padding: 30px;"><%=nasaData.title%></div>
+        <div style="margin-top: 10px; text-align: center; padding: 30px;"><%=nasaData.expl%></div>
+      </div>
+    </div>
+    
 </body>
 </html>

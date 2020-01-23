@@ -1,25 +1,32 @@
+
 const router = require('express').Router();
 const passport = require('passport');
 const axios = require('axios').default;
 const models = require('../models');
 
 //auth login
-router.post('/login',(req, res, next) => {
-  passport.authenticate('local',(err, user, info) =>{
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/error'); }
-    req.logIn(user,(err)=> {
-      if (err) { return next(err); }
-      console.log(req.user.username)
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect("/error");
+    }
+    req.logIn(user, err => {
+      if (err) {
+        return next(err);
+      }
+      console.log(req.user.username);
       return res.redirect(`/auth/success`);
     });
   })(req, res, next);
 });
 
 //auth login success
-router.get('/success', (req, res, next) => {
+router.get("/success", (req, res, next) => {
   if (req.isAuthenticated()) {
-        axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
+   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
         .then((data)=>{
           // res.render('user-homepage.ejs', {username:
           // {username: req.user.username}
@@ -31,10 +38,10 @@ router.get('/success', (req, res, next) => {
                 media: data.data.media_type,
           }})
         });
-    //next(); 
-  } 
-  else {
-    res.render('error.ejs');
+      });
+    //next();
+  } else {
+    res.render("error.ejs");
   }
 });
 
@@ -64,35 +71,37 @@ router.post('/add-favorite', (req, res, next) => {
 });
 
 //auth logout
-router.get('/logout',(req, res)=> {
-  if(req.isAuthenticated()){
+router.get("/logout", (req, res) => {
+  if (req.isAuthenticated()) {
     console.log("user logging out");
     req.logOut();
     //res.send("user has logged out");
-    res.render('logout.ejs');
+    res.render("logout.ejs");
   } else {
     res.send("You don't have a session open");
     //render('homepage');
   }
 });
 
-router.get('/favorites',(req, res)=> {
-  if(req.isAuthenticated()){
-    res.render('favorites.ejs')
+router.get("/favorites", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("favorites.ejs");
   } else {
     //res.send("You don't have a session open");
-    res.render('homepage.ejs');
+    res.render("homepage.ejs");
   }
 });
 
-
-//auth Google 
-router.get('/google', passport.authenticate('google',{
-  scope:['profile']
-  }));
+//auth Google
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
+);
 
 //auth Google success
-router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
+router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
   //res.send('Welcome, ' + req.user.g_name);
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
   .then((data)=>{
@@ -102,7 +111,7 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
       expl: data.data.explanation,
       url: data.data.url,
     }})
-  })
+  };
 });
 
 module.exports = router;
