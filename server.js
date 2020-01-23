@@ -6,7 +6,6 @@ const models = require('./models');
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const pbkdf2 = require('pbkdf2');
-const moment = require('moment');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -15,7 +14,6 @@ const axios = require('axios').default;
 
 //set up view engine
 app.set('view engine','ejs');
-
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -46,7 +44,7 @@ app.get('/', (req, res)=>{
   res.render('homepage.ejs'); 
 });
 
-//nasa
+//nasa get request renders on user homepage 
 app.get('/nasa-api', (req, res) => {
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
   .then((data)=>{
@@ -62,14 +60,11 @@ app.get('/nasa-api', (req, res) => {
   })
 });
 
+//nasa post request renders when user selects date
 app.post('/nasa-api-2', (req, res) => {
-  console.log(req.body.userDateInput);
   let userDate = req.body.userDateInput;
-
   axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=' + userDate)
   .then((data)=>{
-    console.log(data.data);
-
     res.render('user-homepage.ejs', {nasaData: {
       copyright: data.data.copyright,
       date: data.data.date,
@@ -80,11 +75,9 @@ app.post('/nasa-api-2', (req, res) => {
   })
 });
 
-
 app.get("/sign-in", (req, res)=>{
 res.render('login.ejs');
 });
-
 
 app.get("/sign-up", (req, res)=>{
 res.render('sign-up-page.ejs');
@@ -151,8 +144,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-
-
 //PASSPORT-GOOGLE STRATEGY
 passport.use(new GoogleStrategy({
   //options for google strategy
@@ -167,6 +158,7 @@ passport.use(new GoogleStrategy({
     }
   }).then((currentUser) => {
     if (currentUser) {
+      console.log(currentUser);
       //already have user in db
       console.log("the user exists in db as: " + profile.displayName);
       done(null, currentUser);
