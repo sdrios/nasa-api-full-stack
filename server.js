@@ -5,28 +5,21 @@ const app = express();
 const models = require("./models");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const pbkdf2 = require("pbkdf2");
-const moment = require("moment");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const authRoutes = require("./routes/auth-routes");
-const axios = require("axios").default;
+const pbkdf2 = require('pbkdf2');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const authRoutes = require('./routes/auth-routes');
+const axios = require('axios').default;
 
 //set up view engine
 app.set("view engine", "ejs");
 
-// using app.use to serve up static CSS files in public/assets/ folder when /public link is called in ejs files
-// app.use("/route", express.static("foldername"));
-app.use("/public", express.static("public"));
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-  })
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false, 
+  saveUninitialized: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,57 +44,43 @@ app.get("/", (req, res) => {
   res.render("homepage.ejs");
 });
 
-//nasa
-app.get("/nasa-api", (req, res) => {
-  axios
-    .get(
-      "https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date="
-    )
-    .then(data => {
-      console.log(data.data);
+//nasa get request renders on user homepage 
+app.get('/nasa-api', (req, res) => {
+  axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
+  .then((data)=>{
+    console.log(data.data);
 
-      res.render("user-homepage.ejs", {
-        nasaData: {
-          copyright: data.data.copyright,
-          date: data.data.date,
-          expl: data.data.explanation,
-          url: data.data.url,
-          media: data.data.media_type,
-        }
-      });
-    });
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type
+    }})
+  })
 });
 
-app.post("/nasa-api-2", (req, res) => {
-  console.log(req.body.userDateInput);
+//nasa post request renders when user selects date
+app.post('/nasa-api-2', (req, res) => {
   let userDate = req.body.userDateInput;
-
-  axios
-    .get(
-      "https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=" +
-        userDate
-    )
-    .then(data => {
-      console.log(data.data);
-
-      res.render("user-homepage.ejs", {
-        nasaData: {
-          copyright: data.data.copyright,
-          date: data.data.date,
-          expl: data.data.explanation,
-          url: data.data.url,
-          media: data.data.media_type,
-        }
-      });
-    });
+  axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=' + userDate)
+  .then((data)=>{
+    res.render('user-homepage.ejs', {nasaData: {
+      copyright: data.data.copyright,
+      date: data.data.date,
+      expl: data.data.explanation,
+      url: data.data.url,
+      media: data.data.media_type
+    }})
+  })
 });
 
-app.get("/sign-in", (req, res) => {
-  res.render("login.ejs");
+app.get("/sign-in", (req, res)=>{
+res.render('login.ejs');
 });
 
-app.get("/sign-up", (req, res) => {
-  res.render("sign-up-page.ejs");
+app.get("/sign-up", (req, res)=>{
+res.render('sign-up-page.ejs');
 });
 
 app.post("/sign-up", (req, res) => {
@@ -148,66 +127,32 @@ app.post("/update-password", (req, res, done) => {
     });
 });
 
-app.get("/error", (req, res) => res.render("error.ejs"));
-
-/* PASSPORT LOCAL AUTHENTICATION */
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    models.user
-      .findOne({
-        where: {
-          username: username
-        }
-      })
-      .then(user => {
-        if (!user) {
-          return done(null, false);
-        }
-        if (user.password != encryptionPassword(password)) {
-          return done(null, false);
-        }
-        return done(null, user);
-      })
-      .catch(err => {
-        return done(err);
-      });
-  })
-);
-
 //PASSPORT-GOOGLE STRATEGY
-passport.use(
-  new GoogleStrategy(
-    {
-      //options for google strategy
-      callbackURL: "/auth/google/redirect",
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET
-    },
-    (accessToken, refreshToken, profile, done) => {
-      //check if user already exists in db
-      models.user
-        .findOne({
-          where: {
-            g_id: profile.id
-          }
-        })
-        .then(currentUser => {
-          if (currentUser) {
-            //already have user in db
-            console.log("the user exists in db as: " + profile.displayName);
-            done(null, currentUser);
-          } else {
-            models.user
-              .create({
-                g_name: profile.displayName,
-                g_id: profile.id
-              })
-              .then(newUser => {
-                console.log("New User created: " + newUser);
-                done(null, newUser);
-              });
-          }
-        });
+passport.use(new GoogleStrategy({
+  //options for google strategy
+  callbackURL: '/auth/google/redirect',
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET
+}, (accessToken, refreshToken, profile, done) => {
+  //check if user already exists in db
+  models.user.findOne({
+    where: {
+      g_id: profile.id
+    }
+  }).then((currentUser) => {
+    if (currentUser) {
+      console.log(currentUser);
+      //already have user in db
+      console.log("the user exists in db as: " + profile.displayName);
+      done(null, currentUser);
+    } else {
+      models.user.create({
+        g_name: profile.displayName,
+        g_id: profile.id
+      }).then((newUser) => {
+        console.log("New User created: " + newUser);
+        done(null, newUser);
+      });
     }
   )
 );
