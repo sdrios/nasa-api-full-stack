@@ -1,8 +1,10 @@
 #packages
-node_modules/
+.node_modules/
+node_modules
 
 #environment
 .env
 
 #config
-config/
+.config/
+config
