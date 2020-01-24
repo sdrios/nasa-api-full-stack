@@ -14,6 +14,15 @@ module.exports = {
       userID: {
         type: Sequelize.INTEGER
       },
+      imageURL: {
+        type: Sequelize.STRING
+      },
+      imageTitle: {
+        type: Sequelize.STRING
+      },
+      imageCopyright: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
