@@ -28,7 +28,7 @@ router.get('/success', (req, res, next) => {
                 date: data.data.date,
                 expl: data.data.explanation,
                 url: data.data.url,
-                media: data.data.media_type,
+                title:data.data.title
           }})
         });
     //next(); 
@@ -39,29 +39,53 @@ router.get('/success', (req, res, next) => {
 });
 
 router.post('/add-favorite', (req, res, next) => {
-
   if (req.isAuthenticated()) {
-    console.log(req.body)
-    console.log(req.user.id)
-    console.log(typeof req.user.id)
-    console.log(req.body.date)
-    console.log(typeof req.body.date)
-
+  
+    console.log(req.body.userFavoriteData)
+    let userDataParsed = req.body.userFavoriteData.split(',',4)
+    
      models.favorites.create({
-        imageDate: req.body.date, 
-        userID: req.user.id
+        imageDate: userDataParsed[0], 
+        userID: req.user.id,
+        imageURL: userDataParsed[1],
+        imageTitle: userDataParsed[2],
+        imageCopyright:userDataParsed[3] 
+
   }).then((newFavorite)=>{
     console.log(newFavorite)
-  });
-
-    res.render('favorites.ejs')
-    next(); 
+  }); 
+  res.render('favorites.ejs')
+    next();
   } 
   else {
     res.send("ERROR");
     //res.render('error.ejs');
   }
 });
+
+//get user favorites
+router.get('/favorites',(req, res)=> {
+  if (req.isAuthenticated()) {
+    models.favorites.findAll({
+      userID: req.user.id
+    })
+      .then(userFaves => {
+      //  res.render('favorites.ejs',{favorites:{
+      //    url:
+      //    title:
+      //    copyright:
+      //    date:
+      //  }})
+      console.log(userFaves);
+      })
+ }
+   else {
+    res.send("You don't have a session open");
+   
+  }
+  res.send("success")
+});
+
 
 //auth logout
 router.get('/logout',(req, res)=> {
@@ -101,6 +125,7 @@ router.get('/google/redirect', passport.authenticate('google'),(req,res) => {
       date: data.data.date,
       expl: data.data.explanation,
       url: data.data.url,
+      title:data.data.title
     }})
   })
 });

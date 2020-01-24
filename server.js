@@ -55,8 +55,7 @@ app.get('/nasa-api', (req, res) => {
       date: data.data.date,
       expl: data.data.explanation,
       url: data.data.url,
-      media: data.data.media_type,
-      title: data.data.title
+      title:data.data.title
     }})
   })
 });
@@ -71,7 +70,7 @@ app.post('/nasa-api-2', (req, res) => {
       date: data.data.date,
       expl: data.data.explanation,
       url: data.data.url,
-      media: data.data.media_type
+      title:data.data.title
     }})
   })
 });

@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "yfpmpdgh",
-    "password": "CGPV3zZeuxHexKcAGPc6yY10O3BKIdej",
-    "database": "yfpmpdgh",
-    "host": "hansken.db.elephantsql.com",
+    "username": "postgres",
+    "password": null,
+    "database": "nasa-app-dev",
+    "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": 0
   },

@@ -6,10 +6,6 @@
   <title>User Homepage</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
 </head>
 
 <body
@@ -31,28 +27,28 @@
     </div>
   </nav>
 
-  <div class="pt-5 container">
-    <div class="jumbotron jumbotron-fluid">
-      <div class="row" style="margin-left: auto; margin-right: auto;">
-        <img class="rounded border" style="display: inline-block; margin-left: auto; margin-right: auto;"
-          src="<%=nasaData.url%>">
+  <div class="pt-4 container">
+    <div class="jumbotron jumbotron-fluid pt-3 pb-3">
+      <div class="d-flex flex-row justify-content-center">
+          <p class="display-4" id="title"><%=nasaData.title%></p>
       </div>
-      <div class="row" style="display: block; text-align: center;">
-        <form action="/nasa-api-2" method="POST"
-          style="display: inline-block; margin-left: auto; margin-right: auto; margin-top: 15px;">
-          <input type="date" name="userDateInput" id="datepicker">
-          <button type="submit">Select</button>
+
+      <div class="row">
+        <img class="rounded border d-inline-block ml-auto mr-auto"src="<%=nasaData.url%>"></div>
+      <div class="d-flex flex-row justify-content-between mb-2 mt-2 ml-5 mr-5">
+        <form action="/nasa-api-2" method="POST">
+          <input type="date" name="userDateInput" id="datepicker" value="<%=nasaData.date%>"></input>
+          <button class="btn btn-dark" type="submit">Select</buttonbtn btn-dark btn-lg>
         </form>
-        <form action="/add-favorite" method="POST"
-          style="display: inline-block; margin-left: auto; margin-right: auto; margin-top: 15px;">
-          <button type="submit">Favorite</button>
+        <form action="/auth/add-favorite" method="POST">
+          <input type="hidden" value="<%=nasaData.date%>,<%=nasaData.url%>,<%=nasaData.title%>,<%=nasaData.copyright%>" name="userFavoriteData"></input>
+          <button class="btn btn-dark" type="submit">Favorite</button>
         </form>
-        <div style="display: inline-block; margin-left: 10px; margin-right: auto; margin-top: 15px;">
-          <%=nasaData.date%>
-        </div>
-        <div style="margin-top: 10px; text-align: center; padding: 30px;"><%=nasaData.title%></div>
-        <div style="margin-top: 10px; text-align: center; padding: 30px;"><%=nasaData.expl%></div>
       </div>
+
+      <div id="explanation" class="text-justify ml-5 mr-5"><%=nasaData.expl%></div>
+      <br>
+      <div class="d-flex flex-row justify-content-start ml-5 mr-5">Source: <%=nasaData.copyright%></div>
     </div>
     
 </body>
