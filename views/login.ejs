@@ -20,19 +20,21 @@
             </form>
         </div>
     </nav>
-    <div class="pt-5 container">
+    <div class="pt-5 d-flex justify-content-center">
 
-        <div class="jumbotron">
-            <h1 class="display-4">Sign In Below</h1>
+        <div class="jumbotron col-4 ">
+             <h1 class="display-4">Sign In Below</h1>
             <hr class="my-4">
-            <form action="/auth/login" method="POST">
-                <input type="text" name="username" class="username form-control" placeholder="Username" />
-                <input type="password" name="password" class="password form-control" placeholder="Password" />
-                <button type="submit" class="btn btn-outline-secondary">Sign In</button>
-            </form>
-            <form action="/auth/google" method="GET">
-                <button type="submit" class="btn btn-outline-secondary">Google Sign In</button>
-            </form>
+          
+                <form action="/auth/login" method="POST">
+                    <input type="text" name="username" class="username form-control" placeholder="Username" />
+                    <input type="password" name="password" class="password form-control" placeholder="Password" />
+                    <button type="submit" class="btn btn-outline-secondary">Sign In</button>
+                </form>
+                <form action="/auth/google" method="GET">
+                    <button type="submit" class="btn btn-outline-secondary">Google Sign In</button>
+                </form>
+          
             <form action="/forgot-password" method="GET">
                 <button type="submit" class="btn btn-outline-secondary">Forgot Password?</button>
             </form>

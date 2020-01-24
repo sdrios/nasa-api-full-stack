@@ -70,20 +70,25 @@ router.get('/favorites',(req, res)=> {
       userID: req.user.id
     })
       .then(userFaves => {
-      //  res.render('favorites.ejs',{favorites:{
-      //    url:
-      //    title:
-      //    copyright:
-      //    date:
-      //  }})
-      console.log(userFaves);
+      let faveArray =  userFaves.map((fave)=>{
+           return fave.dataValues
+        });
+      console.log(faveArray);
+      console.log(faveArray[0].imageURL)
+      console.log(faveArray[0].imageTitle)
+      console.log(faveArray[0].imageDate)
+      
+    
+       res.render('favorites.ejs',{favorites: faveArray
+       })
+   
       })
  }
    else {
     res.send("You don't have a session open");
    
   }
-  res.send("success")
+ // res.send("test")
 });
 
 

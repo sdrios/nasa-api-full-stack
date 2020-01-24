@@ -1,21 +1,18 @@
 {
-  "development": {
-    "username": "postgres",
-    "password": null,
-    "database": "nasa-app-dev",
-    "host": "localhost",
+  "production": {
+    "username": "fazorlqc",
+    "password": "sQwOKL7szwisWxTiJctnOglXl0V-Xu4v",
+    "database": "fazorlqc",
+    "host": "otto.db.elephantsql.com",
     "dialect": "postgres",
     "operatorsAliases": 0
   },
-  "production": {
-    "username": "yfpmpdgh",
-    "password": "CGPV3zZeuxHexKcAGPc6yY10O3BKIdej",
-    "database": "yfpmpdgh",
-    "host": "http://hansken.db.elephantsql.com",
+  "development": {
+    "username": "fazorlqc",
+    "password": "sQwOKL7szwisWxTiJctnOglXl0V-Xu4v",
+    "database": "fazorlqc",
+    "host": "otto.db.elephantsql.com",
     "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": "true"
-    },
     "operatorsAliases": 0
   }
 }
