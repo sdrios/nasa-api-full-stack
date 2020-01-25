@@ -51,7 +51,7 @@ router.post('/add-favorite', (req, res, next) => {
   }).then((newFavorite)=>{
     console.log(newFavorite)
   }); 
-  res.render('/favorites');
+  res.render('/auth/favorites');
     next();
   } 
   else {
