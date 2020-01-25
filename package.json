@@ -1,6 +1,10 @@
 {
   "name": "nasa-api-full-stack",
   "version": "1.0.0",
+  "engines":{
+    "node": "12.13.1",
+    "npm":"6.12.1"
+  },
   "description": "Full stack application utilizing NASA API to display satellite data.",
   "main": "server.js",
   "scripts": {
