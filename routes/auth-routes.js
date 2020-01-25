@@ -51,9 +51,7 @@ router.post('/add-favorite', (req, res, next) => {
   }).then((newFavorite)=>{
     console.log(newFavorite)
   }); 
-  res.render('favorites.ejs',{
-          favorites: faveArray
-        });
+  res.render('/favorites');
     next();
   } 
   else {
@@ -65,7 +63,7 @@ router.post('/add-favorite', (req, res, next) => {
 router.get('/favorites', (req, res) => {
   if (req.isAuthenticated()) {
     models.favorites.findAll({
-      userID: req.user.id
+      where: {userID: req.user.id}
     })
       .then(userFaves => {
         let faveArray = userFaves.map((fave) => {
