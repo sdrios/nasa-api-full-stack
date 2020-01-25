@@ -8,35 +8,30 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body
-    style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-    <nav class="view navbar navbar-secondary">
-        <a class="navbar-brand" style="color: white;">
-            <p style="margin-left: 50px; font-size: 35pt; font-weight: bold;">APOD API</p>
-        </a>
+<body style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+    <nav class="text-white view navbar navbar-secondary">
+        <p style="margin-left: 50px; font-size: 35pt; font-weight: bold;">APOD API</p>
         <div class="row justify-content-end">
-            <form action="/" method="GET" class="pl-2">
-                <button class="btn btn-dark" style="margin-right: 40px; font-size: large;" type="submit">Home</button>
+            <form action="/" method="GET">
+                <button class="btn btn-dark btn-lg" style="margin-right: 40px; font-size: large;" type="submit">Home</button>
             </form>
         </div>
     </nav>
+    
     <div class="pt-5 d-flex justify-content-center">
-
-        <div class="jumbotron col-4 ">
-             <h1 class="display-4">Sign In Below</h1>
+        <div class="jumbotron col-4">
+            <h1 class="display-4">Sign In</h1>
             <hr class="my-4">
-          
-                <form action="/auth/login" method="POST">
-                    <input type="text" name="username" class="username form-control" placeholder="Username" />
-                    <input type="password" name="password" class="password form-control" placeholder="Password" />
-                    <button type="submit" class="btn btn-outline-secondary">Sign In</button>
-                </form>
-                <form action="/auth/google" method="GET">
-                    <button type="submit" class="btn btn-outline-secondary">Google Sign In</button>
-                </form>
-          
+            <form action="/auth/login" method="POST">
+                <input type="text" name="username" class="username form-control" placeholder="Username" />
+                <input type="password" name="password" class="password form-control" placeholder="Password" />
+                <button type="submit" class="btn btn-dark m-2">Sign In</button>
+            </form>
+            <form action="/auth/google" method="GET">
+                <button type="submit" class="btn btn-dark m-2">Google Sign In</button>
+            </form>
             <form action="/forgot-password" method="GET">
-                <button type="submit" class="btn btn-outline-secondary">Forgot Password?</button>
+                <button type="submit" class="btn btn-dark m-2">Forgot Password?</button>
             </form>
         </div>
     </div>

@@ -8,8 +8,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body
-    style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+<body style="background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixlib=rb-1.2.1&auto=format&fit=crop&w=3866&q=80'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
     <nav class="view navbar navbar-secondary">
         <a class="navbar-brand" style="color: white;">
             <p style="margin-left: 50px; font-size: 35pt; font-weight: bold;">APOD API</p>
@@ -21,17 +20,17 @@
         </div>
     </nav>
 
-    <div class="pt-5 container">
+    <div class="pt-5 d-flex justify-content-center">
         <div class="jumbotron">
             <h1 class="display-4">Register Below</h1>
             <hr class="my-4">
             <form action="/sign-up" method="POST">
                 <input type="text" name="username" class="username form-control" placeholder="Username" />
                 <input type="password" name="password" class="password form-control" placeholder="Password" />
-                <button type="submit" class="btn btn-outline-secondary">Sign Up</button>
+                <button type="submit" class="btn btn-dark m-2">Sign Up</button>
             </form>
             <form action="/auth/google" method="GET">
-                <button type="submit" class="btn btn-outline-secondary">Sign up with Google </button>
+                <button type="submit" class="btn btn-dark m-2">Sign up with Google </button>
             </form>
         </div>
     </div>

@@ -21,8 +21,6 @@ router.get('/success', (req, res, next) => {
   if (req.isAuthenticated()) {
         axios.get('https://api.nasa.gov/planetary/apod?api_key=gAV3SkyoF0XO00UHGXcOn32RjLQehbeuBqBUo1jE&date=')
         .then((data)=>{
-          // res.render('user-homepage.ejs', {username:
-          // {username: req.user.username}
           res.render('user-homepage.ejs', {nasaData: {
                 copyright: data.data.copyright,
                 date: data.data.date,
@@ -40,9 +38,8 @@ router.get('/success', (req, res, next) => {
 
 router.post('/add-favorite', (req, res, next) => {
   if (req.isAuthenticated()) {
-  
-    console.log(req.body.userFavoriteData)
-    let userDataParsed = req.body.userFavoriteData.split(',',4)
+
+    let userDataParsed = req.body.userFavoriteData.split(',',4);
     
      models.favorites.create({
         imageDate: userDataParsed[0], 
@@ -54,41 +51,33 @@ router.post('/add-favorite', (req, res, next) => {
   }).then((newFavorite)=>{
     console.log(newFavorite)
   }); 
-  res.render('favorites.ejs')
+  res.render('favorites.ejs');
     next();
   } 
   else {
-    res.send("ERROR");
-    //res.render('error.ejs');
+    res.render('error.ejs');
   }
 });
 
 //get user favorites
-router.get('/favorites',(req, res)=> {
+router.get('/favorites', (req, res) => {
   if (req.isAuthenticated()) {
     models.favorites.findAll({
       userID: req.user.id
     })
       .then(userFaves => {
-      let faveArray =  userFaves.map((fave)=>{
-           return fave.dataValues
+        let faveArray = userFaves.map((fave) => {
+          return fave.dataValues
         });
-      console.log(faveArray);
-      console.log(faveArray[0].imageURL)
-      console.log(faveArray[0].imageTitle)
-      console.log(faveArray[0].imageDate)
-      
-    
-       res.render('favorites.ejs',{favorites: faveArray
-       })
-   
+
+        res.render('favorites.ejs', {
+          favorites: faveArray
+        })
       })
- }
-   else {
-    res.send("You don't have a session open");
-   
   }
- // res.send("test")
+  else {
+    res.send("You don't have a session open");
+  }
 });
 
 
